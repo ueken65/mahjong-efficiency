@@ -109,19 +109,25 @@ const MahjongTable = () => {
   return (
     <div className={styles.mahjong_table}>
       <div>
-        <TileImages tiles={characters} onClick={hundleClickWall} />
+        <div>
+          <TileImages tiles={characters} onClick={hundleClickWall} />
+        </div>
+        <div>
+          <TileImages tiles={circles} onClick={hundleClickWall} />
+        </div>
+        <div>
+          <TileImages tiles={bamboos} onClick={hundleClickWall} />
+        </div>
+        <div>
+          <TileImages tiles={honours} onClick={hundleClickWall} />
+        </div>
       </div>
-      <div>
-        <TileImages tiles={circles} onClick={hundleClickWall} />
+      <div className={styles.hand_wrapper}>
+        <TileImages tiles={selectedTiles} onClick={hundleClickSelectedTile} />
       </div>
-      <div>
-        <TileImages tiles={bamboos} onClick={hundleClickWall} />
-      </div>
-      <div>
-        <TileImages tiles={honours} onClick={hundleClickWall} />
-      </div>
-      <TileImages tiles={selectedTiles} onClick={hundleClickSelectedTile} />
-      <a onClick={handleClickSortTiles}>理牌</a>
+      <a className={styles.sort_button} onClick={handleClickSortTiles}>
+        理牌
+      </a>
     </div>
   );
 };

@@ -2,4 +2,36 @@
   background: #0C8865;
   width: 800px;
   height: 800px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.hand_wrapper {
+  height: 50px;
+}
+
+.sort_button {
+  cursor: pointer;
+  width: 100px;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 15px;
+  text-align: center;
+  background: #ffffff;
+}
+
+.sort_button:hover {
+  opacity: .7;
+  filter: brightness(120%);
+}
+
+.tile_image {
+  cursor: pointer;
+}
+
+.tile_image:hover {
+  opacity: .7;
+  filter: brightness(120%);
 }
