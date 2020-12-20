@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  app:
+    image: node:14.15.3
+    container_name: mahjong-efficiency-webapp
+    ports:
+      - "30100:3000"
+    tty: true
+    volumes:
+      - ./:/src
+    working_dir: "/src"
