@@ -1,7 +1,7 @@
 import Hand from "../Hand";
 import Tile from "../Tile";
 
-describe("sortTiles", () => {
+describe("Hand", () => {
   describe("draw", () => {
     it("牌をツモれること", () => {
       const hand = new Hand([]);
@@ -49,14 +49,14 @@ describe("sortTiles", () => {
       const expected = [
         "1m",
         "3m",
+        "3p",
+        "4p",
+        "4p",
         "2s",
         "3s",
         "4s",
         "4s",
         "9s",
-        "3p",
-        "4p",
-        "4p",
         "1j",
         "1j",
         "4j",

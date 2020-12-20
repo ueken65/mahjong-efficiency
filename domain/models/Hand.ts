@@ -1,8 +1,9 @@
-import Tile from "./Tile";
+import Tile, { Suit } from "./Tile";
 
 export default class Hand {
   static readonly MAX_TILE_COUNT: number = 13;
   private tiles: Tile[];
+  private suitOrder: Suit[] = ["character", "circle", "bamboo", "honour"];
 
   constructor(tiles: Tile[]) {
     this.tiles = tiles;
@@ -26,17 +27,25 @@ export default class Hand {
   }
 
   public sortTiles(): this {
-    const tilesBySuit = this.tiles.reduce((acc: Tile[][], tile) => {
-      const prop = tile.getSuit;
-      acc[prop] = acc[prop] || [];
-      acc[prop].push(tile);
-      return acc;
-    }, []);
+    const tilesGroupBySuit: Map<Suit, Tile[]> = new Map(
+      this.suitOrder.map((s: Suit) => [s, []])
+    );
 
-    this.tiles = Object.entries(tilesBySuit)
-      .map((obj) => obj[1])
-      .map((tiles) => tiles.sort((a, b) => a.getTileNumber - b.getTileNumber))
-      .flat();
+    this.tiles.forEach((tile: Tile) => {
+      const suit = tile.getSuit;
+      const targetTiles = tilesGroupBySuit.get(suit) as Tile[];
+      targetTiles.push(tile);
+      tilesGroupBySuit.set(suit, targetTiles);
+    });
+
+    tilesGroupBySuit.forEach((tiles: Tile[], suit: Suit) => {
+      tilesGroupBySuit.set(
+        suit,
+        tiles.sort((a, b) => a.getTileNumber - b.getTileNumber)
+      );
+    });
+
+    this.tiles = Array.from(tilesGroupBySuit.values()).flat();
 
     return this;
   }

@@ -46,7 +46,7 @@ export default class Tile {
     return this.tileNumber;
   }
 
-  get getSuit(): string {
+  get getSuit(): Suit {
     return this.suit;
   }
 
