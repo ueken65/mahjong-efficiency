@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import Hand from "../../domain/models/Hand";
 import Tile from "../../domain/models/Tile";
 import styles from "../../styles/MahjongTable.module.css";
@@ -22,10 +22,15 @@ const circles: Tile[] = circlesWall.map((t) => t[0]);
 const bamboos: Tile[] = bamboosWall.map((t) => t[0]);
 const honours: Tile[] = honoursWall.map((t) => t[0]);
 
+const sortTiles = (tiles: Tile[]): Tile[] => {
+  const hand = new Hand(tiles);
+  return hand.sortTiles().getTiles;
+};
+
 const MahjongTable = () => {
   const [selectedTiles, setSelectedTiles] = React.useState<Tile[]>([]);
 
-  const hundleClickWall = React.useCallback(
+  const hundleClickWall = useCallback(
     (event: any): void => {
       if (13 === selectedTiles.length) return;
 
@@ -35,28 +40,28 @@ const MahjongTable = () => {
         case "character": {
           const drawnCharacter = charactersWall[index].pop();
           if ("undefined" === typeof drawnCharacter) return;
-          setSelectedTiles((prev) => [...prev, drawnCharacter]);
+          setSelectedTiles((prev) => sortTiles([...prev, drawnCharacter]));
           return;
         }
 
         case "circle": {
           const drawnCircle = circlesWall[index].pop();
           if ("undefined" === typeof drawnCircle) return;
-          setSelectedTiles((prev) => [...prev, drawnCircle]);
+          setSelectedTiles((prev) => sortTiles([...prev, drawnCircle]));
           return;
         }
 
         case "bamboo": {
           const drawnBamboo = bamboosWall[index].pop();
           if ("undefined" === typeof drawnBamboo) return;
-          setSelectedTiles((prev) => [...prev, drawnBamboo]);
+          setSelectedTiles((prev) => sortTiles([...prev, drawnBamboo]));
           return;
         }
 
         case "honour": {
           const drawnHonour = honoursWall[index].pop();
           if ("undefined" === typeof drawnHonour) return;
-          setSelectedTiles((prev) => [...prev, drawnHonour]);
+          setSelectedTiles((prev) => sortTiles([...prev, drawnHonour]));
           return;
         }
 
@@ -67,7 +72,7 @@ const MahjongTable = () => {
     [selectedTiles]
   );
 
-  const hundleClickSelectedTile = React.useCallback(
+  const hundleClickSelectedTile = useCallback(
     (event: any): void => {
       const clickedTileIndex = parseInt(event.target.dataset.index, 10);
       const clickedTile = selectedTiles[clickedTileIndex];
@@ -101,11 +106,6 @@ const MahjongTable = () => {
     [selectedTiles]
   );
 
-  const handleClickSortTiles = React.useCallback((): void => {
-    const hand = new Hand(selectedTiles);
-    setSelectedTiles([...hand.sortTiles().getTiles]);
-  }, [selectedTiles]);
-
   return (
     <div className={styles.mahjong_table}>
       <div>
@@ -125,9 +125,6 @@ const MahjongTable = () => {
       <div className={styles.hand_wrapper}>
         <TileImages tiles={selectedTiles} onClick={hundleClickSelectedTile} />
       </div>
-      <a className={styles.sort_button} onClick={handleClickSortTiles}>
-        理牌
-      </a>
     </div>
   );
 };
