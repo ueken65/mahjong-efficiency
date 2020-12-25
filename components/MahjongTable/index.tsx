@@ -1,26 +1,24 @@
 import React, { useCallback } from "react";
 import Hand from "../../domain/models/Hand";
 import Tile from "../../domain/models/Tile";
+import {
+  createAllBambooWallGroupByTileNumber,
+  createAllCharacterWallGroupByTileNumber,
+  createAllCircleWallGroupByTileNumber,
+  createAllHonourWallGroupByTileNumber,
+} from "../../lib/Wall";
 import styles from "../../styles/MahjongTable.module.css";
 import TileImages from "./TileImages";
 
-const charactersWall: Array<Tile[]> = [...Array(9)].map((_, i) =>
-  [...Array(4)].fill(new Tile("character", i + 1))
-);
-const circlesWall: Array<Tile[]> = [...Array(9)].map((_, i) =>
-  [...Array(4)].fill(new Tile("circle", i + 1))
-);
-const bamboosWall: Array<Tile[]> = [...Array(9)].map((_, i) =>
-  [...Array(4)].fill(new Tile("bamboo", i + 1))
-);
-const honoursWall: Array<Tile[]> = [...Array(7)].map((_, i) =>
-  [...Array(4)].fill(new Tile("honour", i + 1))
-);
+let charactersWall = createAllCharacterWallGroupByTileNumber();
+let circlesWall = createAllCircleWallGroupByTileNumber();
+let bamboosWall = createAllBambooWallGroupByTileNumber();
+let honoursWall = createAllHonourWallGroupByTileNumber();
 
-const characters: Tile[] = charactersWall.map((t) => t[0]);
-const circles: Tile[] = circlesWall.map((t) => t[0]);
-const bamboos: Tile[] = bamboosWall.map((t) => t[0]);
-const honours: Tile[] = honoursWall.map((t) => t[0]);
+const characters = [...Array(9)].map((_, i) => new Tile("character", i + 1));
+const circles = [...Array(9)].map((_, i) => new Tile("circle", i + 1));
+const bamboos = [...Array(9)].map((_, i) => new Tile("bamboo", i + 1));
+const honours = [...Array(7)].map((_, i) => new Tile("honour", i + 1));
 
 const sortTiles = (tiles: Tile[]): Tile[] => {
   const hand = new Hand(tiles);
@@ -39,28 +37,28 @@ const MahjongTable = () => {
       switch (event.target.dataset.suit) {
         case "character": {
           const drawnCharacter = charactersWall[index].pop();
-          if ("undefined" === typeof drawnCharacter) return;
+          if (!drawnCharacter) return;
           setSelectedTiles((prev) => sortTiles([...prev, drawnCharacter]));
           return;
         }
 
         case "circle": {
           const drawnCircle = circlesWall[index].pop();
-          if ("undefined" === typeof drawnCircle) return;
+          if (!drawnCircle) return;
           setSelectedTiles((prev) => sortTiles([...prev, drawnCircle]));
           return;
         }
 
         case "bamboo": {
           const drawnBamboo = bamboosWall[index].pop();
-          if ("undefined" === typeof drawnBamboo) return;
+          if (!drawnBamboo) return;
           setSelectedTiles((prev) => sortTiles([...prev, drawnBamboo]));
           return;
         }
 
         case "honour": {
           const drawnHonour = honoursWall[index].pop();
-          if ("undefined" === typeof drawnHonour) return;
+          if (!drawnHonour) return;
           setSelectedTiles((prev) => sortTiles([...prev, drawnHonour]));
           return;
         }
@@ -71,6 +69,14 @@ const MahjongTable = () => {
     },
     [selectedTiles]
   );
+
+  const hundleClickReset = useCallback(() => {
+    setSelectedTiles([]);
+    charactersWall = createAllCharacterWallGroupByTileNumber();
+    circlesWall = createAllCircleWallGroupByTileNumber();
+    bamboosWall = createAllBambooWallGroupByTileNumber();
+    honoursWall = createAllHonourWallGroupByTileNumber();
+  }, []);
 
   const hundleClickSelectedTile = useCallback(
     (event: any): void => {
@@ -124,6 +130,9 @@ const MahjongTable = () => {
       </div>
       <div className={styles.hand_wrapper}>
         <TileImages tiles={selectedTiles} onClick={hundleClickSelectedTile} />
+      </div>
+      <div className={styles.reset_button} onClick={hundleClickReset}>
+        reset
       </div>
     </div>
   );
