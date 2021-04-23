@@ -23,11 +23,25 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 };
 
 const TestInput: React.FC = () => {
+  const buttonRef = useRef<HTMLButtonElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
+    buttonRef.current?.click();
+  }, [buttonRef]);
+
+  const handleOnClickButton = () => {
+    console.log("click!");
     inputRef.current?.focus();
-  }, []);
-  return <input ref={inputRef} type="text" />;
+  };
+
+  return (
+    <>
+      <button ref={buttonRef} onClick={handleOnClickButton}>
+        focus
+      </button>
+      <input ref={inputRef} type="text" />
+    </>
+  );
 };
 
 const Container: React.FC<Props> = (props) => {
