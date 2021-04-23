@@ -26,8 +26,9 @@ const TestInput: React.FC = () => {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
-    buttonRef.current?.click();
-  }, [buttonRef]);
+    // console.log(buttonRef.current);
+    // buttonRef.current?.click();
+  }, []);
 
   const handleOnClickButton = () => {
     console.log("click!");
