@@ -27,8 +27,7 @@ const TestInput: React.FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     const focusInput = setTimeout(() => {
-      console.log("click!");
-      buttonRef.current?.click();
+      inputRef.current?.focus();
     }, 2000);
     return () => {
       clearTimeout(focusInput);
