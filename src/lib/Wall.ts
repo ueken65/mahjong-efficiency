@@ -1,4 +1,4 @@
-import Tile from "../domain/models/Tile";
+import Tile from "~/domain/models/Tile";
 
 export const createAllCharacterWallGroupByTileNumber = (): Tile[][] => {
   return [...Array(9)].map((_, i) =>
