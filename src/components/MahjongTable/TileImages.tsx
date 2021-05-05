@@ -1,6 +1,6 @@
 import React from "react";
-import Tile from "../../domain/models/Tile";
-import styles from "../../styles/MahjongTable.module.css";
+import Tile from "~/domain/models/Tile";
+import styles from "./MahjongTable.module.css";
 
 interface Props {
   tiles: Tile[];

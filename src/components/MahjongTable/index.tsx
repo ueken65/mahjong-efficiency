@@ -1,13 +1,13 @@
 import React, { useCallback } from "react";
-import Hand from "../../domain/models/Hand";
-import Tile from "../../domain/models/Tile";
+import Hand from "~/domain/models/Hand";
+import Tile from "~/domain/models/Tile";
 import {
   createAllBambooWallGroupByTileNumber,
   createAllCharacterWallGroupByTileNumber,
   createAllCircleWallGroupByTileNumber,
   createAllHonourWallGroupByTileNumber,
-} from "../../lib/Wall";
-import styles from "../../styles/MahjongTable.module.css";
+} from "~/lib/Wall";
+import styles from "./MahjongTable.module.css";
 import TileImages from "./TileImages";
 
 let charactersWall = createAllCharacterWallGroupByTileNumber();
