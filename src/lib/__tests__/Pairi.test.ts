@@ -1,5 +1,5 @@
-import Hand from "../../domain/models/Hand";
-import Tile from "../../domain/models/Tile";
+import Hand from "~/domain/models/Hand";
+import Tile from "~/domain/models/Tile";
 import Pairi from "../Pairi";
 
 describe("Pairi", () => {
